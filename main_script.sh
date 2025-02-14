@@ -76,7 +76,7 @@ if [ "$seq_type" = "nucleotide" ]; then
     blastn -query "output/${input_fasta}" -db output/blastdb -out output/blast_output.txt -outfmt 6 -num_threads 4 -task blastn -evalue 0.05
 elif [ "$seq_type" = "aminoacid" ]; then
     echo "Running blast for proteins"
-    tblastn -query query_file -db db_file -out output_file -outfmt 6 -num_threads 4 -evalue 0.05
+    tblastn -query "output/${input_fasta}" -db output/blastdb -out output/blast_output.txt -outfmt 6 -num_threads 4 -evalue 0.05
 else
     echo "Invalid seq_type. Please specify either 'nucleotide' or 'aminoacid'."
 fi
