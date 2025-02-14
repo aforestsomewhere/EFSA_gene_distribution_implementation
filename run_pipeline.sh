@@ -12,6 +12,8 @@ input_fasta="$3"
 seq_type="$4"
 plasmid_usage="$5"
 
+#copy the input fasta file to the output folder (create it if it does not exist already)
+mkdir -p output
+cp "$input_fasta" output/
 
-docker run -v "$working_directory":/workspace/output famr:1.0 \
-  bash -c "./main_script.sh \"$species\" \"$input_fasta\" \"$seq_type\" \"$plasmid_usage\""
+./main_script.sh "$species" "$input_fasta" "$seq_type" "$plasmid_usage"
