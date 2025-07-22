@@ -1,9 +1,8 @@
 #!/usr/bin/bash
 
-
 # Check if the correct number of arguments is provided
-if [ "$#" -ne 4 ]; then
-  echo "Usage: $0 <species> <input_fasta> <seq_type> <plasmid_usage>"
+if [ "$#" -ne 5 ]; then
+  echo "Usage: $0 <species> <input_fasta> <seq_type> <plasmid_usage> <completeness>"
   exit 1
 fi
 
@@ -12,13 +11,13 @@ species="$1"
 input_fasta="$2"
 seq_type="$3"
 plasmid_usage="$4"
-
+completeness="$5"
 
 # Download the genomes and save the compressed fasta into a folder
 python3 mops_gen_download_with_error_handling.py -g bacteria -o ./output/ -t4 -n "$species"
 
 # removing non complete genomes
-python3 select_genomes.py
+python3 select_genomes.py --completeness "$completeness"
 directory="output/refseq/"
 id_file="output/refseq/non_complete_genomes_ids.txt"
 while IFS= read -r id; do
@@ -33,7 +32,6 @@ output_file="output/ref_list.txt"
 find "$directory" -type f ! -name "metadata.tsv" > "$output_file"
 output_file="output/ref_genome.txt"
 cat output/reference_accession.txt | xargs -I {} find "$directory" -type f -name "*{}*" > "$output_file"
-
 
 #run fastani type strain to all
 fastANI --ql output/ref_genome.txt --rl output/ref_list.txt  -o output/ani_one_to_all_sub.txt
@@ -80,7 +78,6 @@ elif [ "$seq_type" = "aminoacid" ]; then
 else
     echo "Invalid seq_type. Please specify either 'nucleotide' or 'aminoacid'."
 fi
-
 
 python3 graphical_out.py --genome_num "$genome_count" --species_name "$species" --blast_out output/blast_output.txt --input_fasta "output/$input_fasta" --identity_cutoff 70 --coverage_cutoff 70
 
