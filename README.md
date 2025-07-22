@@ -15,7 +15,10 @@ module load blast/2.14.1
 Step 3: Run pipeline
 Sample command:
 ```
-./run_pipeline.sh test_paralvei "Hafnia paralvei" alveicin_gene.fasta nucleotide extract
+#Species where sufficient number of complete genomes is available
+./run_pipeline.sh test_paralvei "Hafnia paralvei" alveicin_gene.fasta nucleotide extract complete
+#Species where few complete genomes are available
+./run_pipeline.sh test_paralvei "Hafnia paralvei" alveicin_gene.fasta nucleotide remove incomplete
 ```
 Step 4: Modify cutoffs (if necessary)
 Default cutoffs are set at 70% ID and 70% coverage. These can be amended in the main_script.sh script (python3 graphical_out.py)
