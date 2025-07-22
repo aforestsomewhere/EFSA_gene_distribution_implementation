@@ -22,3 +22,5 @@ Sample command:
 ```
 Step 4: Modify cutoffs (if necessary)
 Default cutoffs are set at 70% ID and 70% coverage. These can be amended in the main_script.sh script (python3 graphical_out.py)
+
+Note: July 2025 added option to include incomplete genomes. To enable visualisation, have added auxiliary script concatenate_fasta.py, which converts incomplete multifasta genomic data to a single fasta file for each strain.
