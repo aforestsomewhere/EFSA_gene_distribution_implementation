@@ -51,6 +51,24 @@ for file in "$DIRECTORY"*.gz; do
     gunzip "$file"
 done
 
+#22/07/25 artificially concatenating incomplete genomes for easier data viz
+#added script concatenate_fasta.py to repo
+if [ "$completeness" = "incomplete" ]; then
+    input_dir="$DIRECTORY"
+    output_comb="output/filtered_combined"
+    mkdir -p "$output_comb"
+
+    for file in "$input_dir"/*.fna; do
+	base=$(basename "$file" .fna)
+	output="$output_comb/${base}.fna"
+	python concatenate_fasta.py "$file" "$output"
+    done
+
+  # Remove original .fna files
+  rm "$input_dir"/*.fna
+  mv "$output_comb"/*.fna "$input_dir/"
+fi
+
 python3 suitable_genomes_plasmids.py --input_directory output/filtered --output_directory output/filtered_plasmids --plasmid_setting "$plasmid_usage"
 
 # here to chose if plasmid or not
