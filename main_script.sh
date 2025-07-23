@@ -1,6 +1,5 @@
 #!/usr/bin/bash
 
-#23/7/25 added output folder specification (working_dir)
 # Check if the correct number of arguments is provided
 if [ "$#" -ne 6 ]; then
   echo "Usage: $0 <working_dir> <species> <input_fasta> <seq_type> <plasmid_usage> <completeness>"
@@ -99,5 +98,5 @@ else
     echo "Invalid seq_type. Please specify either 'nucleotide' or 'aminoacid'."
 fi
 
-python3 graphical_out.py --genome_num "$genome_count" --species_name "$species" --blast_out "$working_dir"/blast_output.txt --input_fasta "$working_dir/$input_fasta" --identity_cutoff 70 --coverage_cutoff 70
+python3 graphical_out.py --output_dir "$working_dir" --genome_num "$genome_count" --species_name "$species" --blast_out "$working_dir"/blast_output.txt --input_fasta "$working_dir/$input_fasta" --identity_cutoff 70 --coverage_cutoff 70
 
