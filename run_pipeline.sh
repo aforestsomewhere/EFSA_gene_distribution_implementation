@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 #22/7/25 added completeness as cmd line arg
+#23/7/25 added specification for output folder
 # Check if the correct number of arguments is provided
 if [ "$#" -ne 6 ]; then
   echo "Usage: $0 <working_directory> <species> <input_fasta> <seq_type> <plasmid_usage> <completeness>"
@@ -20,7 +21,7 @@ if [ "$completeness" = "incomplete" ] && [ "$plasmid_usage" != "remove" ]; then
 fi
 
 #copy the input fasta file to the output folder (create it if it does not exist already)
-mkdir -p output
-cp "$input_fasta" output/
+mkdir -p "$working_directory"
+cp "$input_fasta" "$working_directory"/
 
-./main_script.sh "$species" "$input_fasta" "$seq_type" "$plasmid_usage" "$completeness"
+./main_script.sh "$working_directory" "$species" "$input_fasta" "$seq_type" "$plasmid_usage" "$completeness"
